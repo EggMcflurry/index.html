@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>NYÅRSFESTEN 🥂</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Tar bort blå markering vid klick på mobil */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-image: url('https://www.karlshamn.se/wp-content/uploads/shutterstock_281822831-1-scaled_797x502_acf_cropped.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Starta från toppen för att undvika tangentbordsproblem */
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        /* Overlay för läsbarhet */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .game-container {
+            background: rgba(15, 15, 15, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 25px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin: 0 0 5px 0;
+            background: linear-gradient(to right, #fcf6ba, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: #d4af37;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+
+        /* Mobilanpassad input-sektion */
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px; /* 16px förhindrar auto-zoom på iOS */
+            outline: none;
+        }
+
+        .add-btn {
+            background: #d4af37;
+            color: black;
+            border: none;
+            padding: 0 20px;
+            border-radius: 15px;
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        /* Scrollbar lista för namn så den inte tar upp hela skärmen */
+        #nameList {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            padding: 0;
+            list-style: none;
+            max-height: 120px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .name-tag {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .remove-btn {
+            color: #ff4d4d;
+            background: none;
+            border: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 0;
+            margin-left: 5px;
+        }
+
+        /* Den stora knappen - optimerad för tummen */
+        .play-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #d4af37, #fcf6ba);
+            color: black;
+            border: none;
+            border-radius: 20px;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .play-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Resultatruta */
+        #resultArea {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: none;
+            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #chosenName {
+            color: #fcf6ba;
+            font-size: 1.8rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        #chosenQuestion {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            margin-top: 10px;
+            color: #fff;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; scale: 0.8; }
+            to { opacity: 1; scale: 1; }
+        }
+
+        /* Partiklar för konfetti */
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>SKÅL 2025</h1>
+        <div class="subtitle">NYÅRSFESTENS SPEL</div>
+
+        <div class="input-group">
+            <input type="text" id="nameInput" placeholder="Lägg till namn..." autocomplete="off">
+            <button class="add-btn" onclick="addName()">+</button>
+        </div>
+
+        <ul id="nameList"></ul>
+
+        <button class="play-btn" onclick="playGame()">SLUMPA ✨</button>
+
+        <div id="resultArea">
+            <h2 id="chosenName"></h2>
+            <p id="chosenQuestion"></p>
+        </div>
+    </div>
+
+    <script>
+        // NYÅRSFRÅGOR
+        const questions = [
+            "Berätta ditt mest pinsamma minne från året som gått. Drick 2 klunkar.",
+            "Peka på den som kommer däcka först ikväll. Hen dricker 3 klunkar!",
+            "Vem är sämst på att passa tider? Drick en klunk för varje minut du brukar vara sen.",
+            "Nyårslöfte-roulette! Berätta ditt löfte eller ta en shot.",
+            "Alla som har druckit bubbel ikväll dricker 2 klunkar!",
+            "Vem här skulle vinna 'Robinson'? Dela ut 3 klunkar.",
+            "Drick 2 klunkar om du har blivit stoppad av polisen i år.",
+            "Säg en sak du ångrar från 2024. Om du inte vill säga, drick 4 klunkar.",
+            "Vem har snyggast outfit? Hen får dela ut 5 klunkar!",
+            "Ställ dig på en stol och skrik 'GOTT NYTT ÅR'. Gör du det inte? Drick ur glaset!",
+            "Alla singlar dricker 2 klunkar. Alla i förhållande skålar med varandra!",
+            "Vem är mest trolig att hamna i bråk om musiken ikväll? Drick 2 klunkar."
+        ];
+
+        let names = [];
+
+        function addName() {
+            const input = document.getElementById('nameInput');
+            const name = input.value.trim();
+            if (name !== "") {
+                names.push(name);
+                input.value = "";
+                updateList();
+            }
+        }
+
+        function removeName(index) {
+            names.splice(index, 1);
+            updateList();
+        }
+
+        function updateList() {
+            const list = document.getElementById('nameList');
+            list.innerHTML = names.map((name, i) => `
+                <li class="name-tag">
+                    ${name}
+                    <button class="remove-btn" onclick="removeName(${i})">×</button>
+                </li>
+            `).join('');
+        }
+
+        function playGame() {
+            if (names.length === 0) {
+                alert("Lägg till dina vänner först! 🍾");
+                return;
+            }
+
+            const name = names[Math.floor(Math.random() * names.length)];
+            const question = questions[Math.floor(Math.random() * questions.length)];
+
+            const result = document.getElementById('resultArea');
+            result.style.display = 'block';
+            
+            // Scrolla ner automatiskt på mobilen så man ser resultatet
+            setTimeout(() => {
+                result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+
+            document.getElementById('chosenName').innerText = name;
+            document.getElementById('chosenQuestion').innerText = question;
+
+            spawnConfetti();
+        }
+
+        function spawnConfetti() {
+            const colors = ['#d4af37', '#fcf6ba', '#ffffff', '#aa891a'];
+            for (let i = 0; i < 40; i++) {
+                const conf = document.createElement('div');
+                conf.className = 'confetti';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.top = '-10px';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
+                document.body.appendChild(conf);
+
+                conf.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(100vh) translateX(${Math.random() * 40 - 20}vw) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: Math.random() * 2000 + 1000,
+                    easing: 'ease-out'
+                }).onfinish = () => conf.remove();
+            }
+        }
+
+        // Lyssna på Enter-knappen på mobilens tangentbord
+        document.getElementById('nameInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addName();
+                document.getElementById('nameInput').blur(); // Göm tangentbordet efter tillägg
+            }
+        });
+    </script>
+</body>
+</html>
