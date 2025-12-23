@@ -3,61 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>NYÅRSFESTEN 🥂</title>
+    <title>NYÅRSFESTEN 2025 🥂</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
         * {
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Tar bort blå markering vid klick på mobil */
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Montserrat', sans-serif;
-            background-image: url('https://www.karlshamn.se/wp-content/uploads/shutterstock_281822831-1-scaled_797x502_acf_cropped.jpg');
+            background-image: url('https://assets.codepen.io/329180/internal/screenshots/pens/XgpNwb.custom.jpg?version=1606012669');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Starta från toppen för att undvika tangentbordsproblem */
+            align-items: flex-start;
             min-height: 100vh;
             color: white;
-            padding: 20px;
+            padding: 15px;
+            overflow-x: hidden;
+            background-color: #111;
         }
 
-        /* Overlay för läsbarhet */
         body::before {
             content: "";
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: -1;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -2;
         }
 
+        /* --- LASER-LINJER --- */
+        .lines {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 100%;
+            margin: auto;
+            width: 95vw;
+            display: flex;
+            justify-content: space-between;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .line {
+            position: relative;
+            width: 1px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .line::after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 15vh;
+            width: 100%;
+            top: -50%;
+            left: 0;
+            animation: drop 7s 0s infinite;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+        }
+
+        .line:nth-child(1)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #FF4500 75%, #FF4500 100%); animation-delay: 0.5s; }
+        .line:nth-child(2)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #32CD32 75%, #32CD32 100%); animation-delay: 1s; }
+        .line:nth-child(3)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #1E90FF 75%, #1E90FF 100%); animation-delay: 1.5s; }
+        .line:nth-child(4)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #FFD700 75%, #FFD700 100%); animation-delay: 2s; }
+        .line:nth-child(5)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #8A2BE2 75%, #8A2BE2 100%); animation-delay: 2.5s; }
+        .line:nth-child(6)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #20B2AA 75%, #20B2AA 100%); animation-delay: 3s; }
+        .line:nth-child(7)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #DC143C 75%, #DC143C 100%); animation-delay: 3.5s; }
+        .line:nth-child(8)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #00FA9A 75%, #00FA9A 100%); animation-delay: 4s; }
+        .line:nth-child(9)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #FF1493 75%, #FF1493 100%); animation-delay: 4.5s; }
+        .line:nth-child(10)::after { background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #00BFFF 75%, #00BFFF 100%); animation-delay: 5s; }
+
+        @keyframes drop {
+            0% { top: -50%; }
+            100% { top: 110%; }
+        }
+
+        /* --- SPELRUTA --- */
         .game-container {
-            background: rgba(15, 15, 15, 0.85);
+            position: relative;
+            background: rgba(15, 15, 15, 0.9);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 25px 20px;
-            border-radius: 25px;
+            border-radius: 30px;
             border: 1px solid rgba(212, 175, 55, 0.4);
             text-align: center;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+            z-index: 10;
         }
 
         h1 {
             font-size: 2rem;
-            margin: 0 0 5px 0;
-            background: linear-gradient(to right, #fcf6ba, #d4af37);
+            margin: 0;
+            background: linear-gradient(to right, #fcf6ba, #d4af37, #fcf6ba);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
+            font-weight: 900;
         }
 
         .subtitle {
@@ -68,21 +122,20 @@
             font-weight: bold;
         }
 
-        /* Mobilanpassad input-sektion */
         .input-group {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         input {
             flex: 1;
-            padding: 15px;
+            padding: 14px;
             border-radius: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: rgba(255, 255, 255, 0.05);
             color: white;
-            font-size: 16px; /* 16px förhindrar auto-zoom på iOS */
+            font-size: 16px;
             outline: none;
         }
 
@@ -96,7 +149,6 @@
             cursor: pointer;
         }
 
-        /* Scrollbar lista för namn så den inte tar upp hela skärmen */
         #nameList {
             display: flex;
             flex-wrap: wrap;
@@ -104,135 +156,134 @@
             gap: 8px;
             padding: 0;
             list-style: none;
-            max-height: 120px;
+            max-height: 90px;
             overflow-y: auto;
             margin-bottom: 20px;
         }
 
         .name-tag {
-            background: rgba(212, 175, 55, 0.2);
-            border: 1px solid #d4af37;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.5);
             padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 5px;
-            animation: fadeIn 0.3s ease;
         }
 
-        .remove-btn {
-            color: #ff4d4d;
-            background: none;
-            border: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-            padding: 0;
-            margin-left: 5px;
+        .remove-btn { color: #ff4d4d; background: none; border: none; font-weight: bold; margin-left: 6px; }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
         }
 
-        /* Den stora knappen - optimerad för tummen */
         .play-btn {
-            width: 100%;
-            padding: 20px;
-            font-size: 1.5rem;
+            flex: 1;
+            padding: 18px 5px;
+            font-size: 0.75rem;
             background: linear-gradient(45deg, #d4af37, #fcf6ba);
             color: black;
             border: none;
-            border-radius: 20px;
+            border-radius: 15px;
             font-weight: 900;
             text-transform: uppercase;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
             cursor: pointer;
-            margin-top: 10px;
         }
 
-        .play-btn:active {
-            transform: scale(0.96);
-        }
+        .play-btn:active { transform: scale(0.96); }
 
-        /* Resultatruta */
         #resultArea {
             margin-top: 25px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             display: none;
-            animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #chosenName {
-            color: #fcf6ba;
-            font-size: 1.8rem;
-            margin: 0;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        #modeLabel { color: #d4af37; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+        #chosenName { font-size: 1.8rem; margin: 5px 0; color: #fff; }
+        #chosenQuestion { font-size: 1.1rem; line-height: 1.4; color: #ddd; font-style: italic; }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        #chosenQuestion {
-            font-size: 1.1rem;
-            line-height: 1.5;
-            margin-top: 10px;
-            color: #fff;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; scale: 0.8; }
-            to { opacity: 1; scale: 1; }
-        }
-
-        /* Partiklar för konfetti */
         .confetti {
             position: fixed;
-            width: 8px;
-            height: 8px;
+            width: 7px; height: 7px;
             pointer-events: none;
-            z-index: 999;
+            z-index: 100;
         }
     </style>
 </head>
 <body>
 
+    <div class="lines">
+        <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
+        <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
+    </div>
+
     <div class="game-container">
-        <h1>SKÅL 2025</h1>
-        <div class="subtitle">NYÅRSFESTENS SPEL</div>
+        <h1>GOTT NYTT ÅR</h1>
+        <div class="subtitle">2025 EDITION 🥂</div>
 
         <div class="input-group">
-            <input type="text" id="nameInput" placeholder="Lägg till namn..." autocomplete="off">
+            <input type="text" id="nameInput" placeholder="Skriv namn..." autocomplete="off">
             <button class="add-btn" onclick="addName()">+</button>
         </div>
 
         <ul id="nameList"></ul>
 
-        <button class="play-btn" onclick="playGame()">SLUMPA ✨</button>
+        <div class="button-group">
+            <button class="play-btn" onclick="playGame('skal')">SKÅL! 🥂</button>
+            <button class="play-btn" onclick="playGame('aldrig')">ALDRIG 🙊</button>
+            <button class="play-btn" onclick="playGame('peka')">PEKA! 👉</button>
+        </div>
 
         <div id="resultArea">
+            <span id="modeLabel"></span>
             <h2 id="chosenName"></h2>
             <p id="chosenQuestion"></p>
         </div>
     </div>
 
     <script>
-        // NYÅRSFRÅGOR
-        const questions = [
-            "Berätta ditt mest pinsamma minne från året som gått. Drick 2 klunkar.",
-            "Peka på den som kommer däcka först ikväll. Hen dricker 3 klunkar!",
-            "Vem är sämst på att passa tider? Drick en klunk för varje minut du brukar vara sen.",
-            "Nyårslöfte-roulette! Berätta ditt löfte eller ta en shot.",
-            "Alla som har druckit bubbel ikväll dricker 2 klunkar!",
-            "Vem här skulle vinna 'Robinson'? Dela ut 3 klunkar.",
-            "Drick 2 klunkar om du har blivit stoppad av polisen i år.",
-            "Säg en sak du ångrar från 2024. Om du inte vill säga, drick 4 klunkar.",
-            "Vem har snyggast outfit? Hen får dela ut 5 klunkar!",
-            "Ställ dig på en stol och skrik 'GOTT NYTT ÅR'. Gör du det inte? Drick ur glaset!",
-            "Alla singlar dricker 2 klunkar. Alla i förhållande skålar med varandra!",
-            "Vem är mest trolig att hamna i bråk om musiken ikväll? Drick 2 klunkar."
-        ];
+        const categories = {
+            skal: [
+                "Drick 3 klunkar om du har blivit stoppad av polisen i år.",
+                "Svep din dryck om du inte har börjat dansa än ikväll!",
+                "Nyårslöfte-roulette! Berätta ditt löfte eller ta en shot.",
+                "Alla som har bubbel i glaset dricker 2 klunkar!",
+                "Du är festens mittpunkt! Dela ut 5 klunkar till valfria personer.",
+                "Visa ditt bästa dancemove och ta 2 klunkar.",
+                "Drick 4 klunkar om du har på dig något glittrigt ikväll."
+            ],
+            aldrig: [
+                "Jag har aldrig somnat på en fest. (De som gjort det dricker!)",
+                "Jag har aldrig skickat ett sms till fel person under året.",
+                "Jag har aldrig glömt namnet på någon jag precis hälsat på.",
+                "Jag har aldrig tjuvöppnat en julklapp/present i förväg.",
+                "Jag har aldrig tagit en selfie på en toalett.",
+                "Jag har aldrig råkat fylleringa någon i år.",
+                "Jag har aldrig gått vilse på en fest eller ett event.",
+                "Jag har aldrig brutit ett nyårslöfte innan januari var slut."
+            ],
+            peka: [
+                "Peka på den som kommer däcka först ikväll. Hen dricker 3 klunkar!",
+                "Peka på den som är mest trolig att vinna på lotto.",
+                "Peka på den som har sämst lokalsinne. Hen dricker 2 klunkar!",
+                "Peka på den som är mest aktiv på sociala medier.",
+                "Peka på den som sjunger bäst (eller sämst) i duschen!",
+                "Peka på den som skulle överleva längst i en zombieapokalyps.",
+                "Peka på den som blir mest generad av att dansa offentligt.",
+                "Peka på den som låtsas vara sjuk för att slippa gå på ett event i år."
+            ]
+        };
 
         let names = [];
 
@@ -261,56 +312,50 @@
             `).join('');
         }
 
-        function playGame() {
+        function playGame(mode) {
             if (names.length === 0) {
-                alert("Lägg till dina vänner först! 🍾");
+                alert("Namnen först, sen fest! 🍾");
                 return;
             }
 
             const name = names[Math.floor(Math.random() * names.length)];
-            const question = questions[Math.floor(Math.random() * questions.length)];
+            const questionList = categories[mode];
+            const question = questionList[Math.floor(Math.random() * questionList.length)];
 
             const result = document.getElementById('resultArea');
-            result.style.display = 'block';
+            const labels = { skal: "UTMANING", aldrig: "JAG HAR ALDRIG", peka: "PEKLEKEN" };
             
-            // Scrolla ner automatiskt på mobilen så man ser resultatet
+            result.style.display = 'block';
+            document.getElementById('modeLabel').innerText = labels[mode];
+            document.getElementById('chosenName').innerText = "✨ " + name;
+            document.getElementById('chosenQuestion').innerText = question;
+
             setTimeout(() => {
                 result.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
-
-            document.getElementById('chosenName').innerText = name;
-            document.getElementById('chosenQuestion').innerText = question;
 
             spawnConfetti();
         }
 
         function spawnConfetti() {
-            const colors = ['#d4af37', '#fcf6ba', '#ffffff', '#aa891a'];
+            const colors = ['#d4af37', '#fcf6ba', '#ffffff', '#FF4500', '#1E90FF'];
             for (let i = 0; i < 40; i++) {
                 const conf = document.createElement('div');
                 conf.className = 'confetti';
                 conf.style.left = Math.random() * 100 + 'vw';
                 conf.style.top = '-10px';
                 conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0%';
                 document.body.appendChild(conf);
 
                 conf.animate([
                     { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-                    { transform: `translateY(100vh) translateX(${Math.random() * 40 - 20}vw) rotate(${Math.random() * 360}deg)`, opacity: 0 }
-                ], {
-                    duration: Math.random() * 2000 + 1000,
-                    easing: 'ease-out'
-                }).onfinish = () => conf.remove();
+                    { transform: `translateY(100vh) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                ], { duration: Math.random() * 1500 + 1500, easing: 'ease-out' }).onfinish = () => conf.remove();
             }
         }
 
-        // Lyssna på Enter-knappen på mobilens tangentbord
         document.getElementById('nameInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addName();
-                document.getElementById('nameInput').blur(); // Göm tangentbordet efter tillägg
-            }
+            if (e.key === 'Enter') { addName(); document.getElementById('nameInput').blur(); }
         });
     </script>
 </body>
