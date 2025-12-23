@@ -16,7 +16,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Montserrat', sans-serif;
-            background-image: url('https://assets.codepen.io/329180/internal/screenshots/pens/XgpNwb.custom.jpg?version=1606012669');
+            background-image: url('https://www.karlshamn.se/wp-content/uploads/shutterstock_281822831-1-scaled_797x502_acf_cropped.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -192,7 +192,24 @@
             cursor: pointer;
         }
 
-        .play-btn:active { transform: scale(0.96); }
+        /* DEN RÖDA KNAPPEN */
+        .custom-btn {
+            background: linear-gradient(45deg, #ff4d4d, #b30000);
+            color: white;
+            padding: 10px;
+            font-size: 0.7rem;
+            width: 50%;
+            margin: 5px auto;
+            border-radius: 12px;
+            border: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: block;
+            box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
+        }
+
+        .play-btn:active, .custom-btn:active { transform: scale(0.96); }
 
         #resultArea {
             margin-top: 25px;
@@ -245,6 +262,8 @@
             <button class="play-btn" onclick="playGame('peka')">PEKA! 👉</button>
         </div>
 
+        <button class="custom-btn" onclick="playGame('eget')">VARNING 🔥</button>
+
         <div id="resultArea">
             <span id="modeLabel"></span>
             <h2 id="chosenName"></h2>
@@ -282,6 +301,19 @@
                 "Peka på den som skulle överleva längst i en zombieapokalyps.",
                 "Peka på den som blir mest generad av att dansa offentligt.",
                 "Peka på den som låtsas vara sjuk för att slippa gå på ett event i år."
+            ],
+            // --- NYA FRÅGOR FÖR DEN RÖDA KNAPPEN ---
+            eget: [
+                "Berätta om ditt pinsammaste minne från året eller drick 5 klunkar.",
+                "Låt personen till höger skriva en valfri status på din Instagram/Facebook, eller svep glaset.",
+                "Visa de 3 senaste bilderna i ditt galleri eller ta en shot.",
+                "Vem i rummet skulle du helst vilja sitta fast i en hiss med? Ni båda dricker 3 klunkar.",
+                "Ring din senast ringda person och säg 'Jag älskar dig' utan förklaring, eller drick ur hela glaset.",
+                "Byt ett klädesplagg med personen till vänster om dig.",
+                "Gör en shot-race mot personen mittemot dig!",
+                "Låt gruppen gå igenom din sökhistorik på mobilen eller drick 5 klunkar.",
+                "Sjung refrängen på en valfri låt med hög röst, annars dricker alla utom du.",
+                "Sms:a ditt ex 'Jag saknar dig' eller svep glaset."
             ]
         };
 
@@ -323,7 +355,7 @@
             const question = questionList[Math.floor(Math.random() * questionList.length)];
 
             const result = document.getElementById('resultArea');
-            const labels = { skal: "UTMANING", aldrig: "JAG HAR ALDRIG", peka: "PEKLEKEN" };
+            const labels = { skal: "UTMANING", aldrig: "JAG HAR ALDRIG", peka: "PEKLEKEN", eget: "VARNING 🔥" };
             
             result.style.display = 'block';
             document.getElementById('modeLabel').innerText = labels[mode];
