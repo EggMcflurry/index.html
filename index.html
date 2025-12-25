@@ -107,13 +107,19 @@
         }
 
         h1 {
-            font-size: 2rem;
-            margin: 0;
+            font-size: 1.5rem;
+            margin: 0 0 10px 0;
             background: linear-gradient(to right, #fcf6ba, #d4af37, #fcf6ba);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
             font-weight: 900;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
         }
 
         .subtitle {
@@ -132,13 +138,14 @@
 
         input {
             flex: 1;
-            padding: 14px;
+            padding: 16px;
             border-radius: 15px;
             border: 1px solid rgba(212, 175, 55, 0.4);
             background: rgba(255, 255, 255, 0.05);
             color: white;
             font-size: 16px;
             outline: none;
+            min-height: 44px;
         }
 
         .add-btn {
@@ -149,6 +156,8 @@
             border-radius: 15px;
             font-weight: 900;
             cursor: pointer;
+            min-height: 44px;
+            font-size: 1.2rem;
         }
 
         #nameList {
@@ -166,12 +175,13 @@
         .name-tag {
             background: rgba(212, 175, 55, 0.15);
             border: 1px solid rgba(212, 175, 55, 0.5);
-            padding: 6px 12px;
+            padding: 8px 14px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             display: flex;
             align-items: center;
             cursor: pointer;
+            min-height: 36px;
         }
 
         .name-tag.selected {
@@ -189,16 +199,23 @@
         }
 
         .play-btn {
-            flex: 1;
-            padding: 18px 5px;
-            font-size: 0.75rem;
+            padding: 30px 50px;
+            font-size: 1.3rem;
             background: linear-gradient(45deg, #d4af37, #fcf6ba);
             color: black;
             border: none;
-            border-radius: 15px;
+            border-radius: 20px;
             font-weight: 900;
             text-transform: uppercase;
             cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        @media (min-width: 768px) {
+            .play-btn {
+                padding: 40px 80px;
+                font-size: 2rem;
+            }
         }
 
         /* DEN RÖDA KNAPPEN */
@@ -231,8 +248,20 @@
         }
 
         #modeLabel { color: #d4af37; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
-        #chosenName { font-size: 1.8rem; margin: 5px 0; color: #fff; }
-        #chosenQuestion { font-size: 1.1rem; line-height: 1.4; color: #ddd; font-style: italic; }
+        #chosenName { font-size: 1.4rem; margin: 10px 0; color: #fff; }
+
+        @media (min-width: 768px) {
+            #chosenName {
+                font-size: 1.8rem;
+            }
+        }
+        #chosenQuestion { font-size: 0.95rem; line-height: 1.5; color: #ddd; font-style: italic; padding: 0 10px; }
+
+        @media (min-width: 768px) {
+            #chosenQuestion {
+                font-size: 1.1rem;
+            }
+        }
 
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.9); }
