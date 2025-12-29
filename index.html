@@ -184,6 +184,33 @@
             min-height: 36px;
         }
 
+        .name-tag { gap: 8px; }
+
+        .remove-btn {
+            margin-left: 6px;
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.9);
+            font-weight: 800;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(6px);
+            transition: opacity 140ms ease, transform 140ms ease, visibility 0s linear 140ms;
+        }
+        .name-tag:hover .remove-btn,
+        .name-tag:focus-within .remove-btn {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            transition-delay: 0s;
+        }
+        .remove-btn:hover { background: rgba(255,255,255,0.04); color: #ffdddd; }
+
         .name-tag.selected {
             background: linear-gradient(90deg, rgba(212,175,55,0.25), rgba(255,255,255,0.02));
             border-color: #d4af37;
@@ -444,8 +471,9 @@
         function updateList() {
             const list = document.getElementById('nameList');
             list.innerHTML = names.map((name, i) => `
-                <li class="name-tag ${i === selectedIndex ? 'selected' : ''}" onclick="selectName(${i})">
+                <li class="name-tag ${i === selectedIndex ? 'selected' : ''}" tabindex="0" onclick="selectName(${i})" onkeydown="if(event.key==='Enter'){selectName(${i})}">
                     <span style="pointer-events:none">${name}</span>
+                    <button class="remove-btn" onclick="removeName(event, ${i})" aria-label="Ta bort ${name}" title="Ta bort ${name}">✕</button>
                 </li>
             `).join('');
         }
@@ -453,6 +481,15 @@
         function selectName(index) {
             if (selectedIndex === index) selectedIndex = -1;
             else selectedIndex = index;
+            updateList();
+        }
+
+        function removeName(e, index) {
+            e.stopPropagation();
+            if (index < 0 || index >= names.length) return;
+            names.splice(index, 1);
+            if (selectedIndex === index) selectedIndex = -1;
+            else if (selectedIndex > index) selectedIndex--;
             updateList();
         }
 
