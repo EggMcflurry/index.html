@@ -274,9 +274,35 @@
             pointer-events: none;
             z-index: 100;
         }
+        
+        /* Diskret knapp i vänstra hörnet */
+        #discreetBtn {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            background: rgba(0,0,0,0.45);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 6px 8px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 9999;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 0.75;
+            transition: opacity 160ms ease, transform 120ms ease;
+        }
+        #discreetBtn:hover { opacity: 1; transform: translateY(-1px); }
+        @media (max-width: 420px) {
+            #discreetBtn { top: 8px; left: 8px; padding: 5px 7px; font-size: 0.8rem; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Diskret knapp (vänstra hörnet) -->
+    <button id="discreetBtn" aria-pressed="false" aria-label="Diskret knapp">⋯</button>
 
     <div class="lines">
         <div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div>
@@ -492,6 +518,27 @@
         document.getElementById('nameInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') { addName(); document.getElementById('nameInput').blur(); }
         });
+
+        // Diskret knapp
+        (function(){
+            const btn = document.getElementById('discreetBtn');
+            if (!btn) return;
+            
+            // LÄNK HÄR:
+            const discreetBtnLink = 'https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1';
+
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (discreetBtnLink && discreetBtnLink.trim() !== '') {
+                    // Navigera till angiven länk i samma flik
+                    window.location.href = discreetBtnLink;
+                    return;
+                }
+                const pressed = btn.getAttribute('aria-pressed') === 'true';
+                btn.setAttribute('aria-pressed', String(!pressed));
+                document.body.toggleAttribute('data-discreet-active');
+            });
+        })();
     </script>
 </body>
 </html>
